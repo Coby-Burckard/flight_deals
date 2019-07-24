@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'flight_deals.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'flightdealspostgres',
+        'USER': 'flightdealspostgres',
+        'PASSWORD': '8k5H8cww35g3rF2',
+        'HOST': 'flightdeals.cqwpqjtjedh6.us-east-1.rds.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
