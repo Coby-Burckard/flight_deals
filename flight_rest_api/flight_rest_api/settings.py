@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'skymiles_tracker.apps.SkymilesTrackerConfig',
+    'background_task'
 ]
 
 MIDDLEWARE = [

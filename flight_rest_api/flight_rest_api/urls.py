@@ -14,8 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from skymiles_tracker.task import check_delta
+from background_task.models import Task
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('skymiles_tracker.urls')),
 ]
+#need to delete current tasks here
+Task.objects.all().delete()
+check_delta(repeat=10)

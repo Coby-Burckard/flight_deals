@@ -13,7 +13,8 @@ class Deal(models.Model):
     miles = models.IntegerField()
     start_date = models.DateField()
     end_date = models.DateField()
-    
+    is_active = models.BooleanField(default=True)
+
     def __repr__(self):
         return '{} -> {} for {}'.format(self.departure_airport, self.arrival_airport, self.miles)
 
