@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('skymiles_tracker.urls')),
 ]
-#need to delete current tasks here
+
+#deletes existing tasks and schedules the repeating task for checking the delta_api
 Task.objects.all().delete()
 check_delta(repeat=10)
