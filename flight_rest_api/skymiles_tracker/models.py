@@ -33,12 +33,9 @@ class Deal(models.Model):
 
     def __eq__(self, other):
         #forgive me father, for I have written a long if statement.... please auto format on save
-        #self.arrival_airport == other.arrival_airport and self.departure_airport == other.departure_airport and self.miles == other.miles and self.start_date == other.start_date and self.end_date == other.end_date:
         if self.miles == other.miles and self.arrival_airport == other.arrival_airport and self.departure_airport == other.departure_airport and str(self.start_date) == str(other.start_date) and str(self.end_date) == str(other.end_date):
-            print('found an equal deal')
             return True
         else:
-            print('found a not equal deal')
             return False
 
     def __hash__(self):

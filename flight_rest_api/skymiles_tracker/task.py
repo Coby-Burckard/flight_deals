@@ -10,10 +10,13 @@ from .models import Airport, Deal
 def check_delta():
     url = 'https://delta-api.xcheck.co/v1/c0003bf785?points=Y'
     routes_list = json.loads(requests.get(url).text)['routes']
+    new_deal_list = []
 
     for route in routes_list:
         check_airports(route)
-        check_deals(route)
+        new_deal_list.append(check_deals(route))
+    
+    deactivate_old_deals(new_deal_list)
 
     return None
 
@@ -49,10 +52,22 @@ def check_deals(route):
     else:
         print(new_deal, ' not in db')
         new_deal.save()
-    return None
+    return new_deal
 
 def convert_date_format(date):
     date_list = re.findall('[0-9]+', date)
     converted_date = '-'.join([date_list[2], date_list[0], date_list[1]])
-    print(converted_date)
     return(converted_date)
+
+def deactivate_old_deals(new_deal_list):
+    active_deals = Deal.objects.filter(is_active = True)
+
+    for active_deal in active_deals:
+        if active_deal in new_deal_list:
+            pass 
+        else:
+            active_deal.is_active = False
+            active_deal.save()
+            print('deactivated ', active_deal)
+    
+    return None
