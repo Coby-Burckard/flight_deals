@@ -22,19 +22,17 @@ def check_airports(route):
     new_arrival_airport = Airport(name=route['destination_queried'])
     new_departure_airport = Airport(name=route['origin_queried'])
     if new_arrival_airport in airports:
-        print(new_arrival_airport.name, ' in database')
+        pass
     else:
-        print(new_arrival_airport, ' not in database')
         new_arrival_airport.save()
     if new_departure_airport in airports:
-        print(new_departure_airport.name, ' in database')
+        pass
     else:
-        print(new_departure_airport.name, ' not in database')
         new_departure_airport.save()
     return None
 
 def check_deals(route):
-    # need to fix deals being replicated in the db... 
+    # need to fix deals being replicated in the db... Maybe has to do with airports not being linked until rerunning site
     all_deals = Deal.objects.all()
     active_deals = Deal.objects.filter(is_active=True)
     new_deal = Deal(
@@ -51,7 +49,6 @@ def check_deals(route):
     else:
         print(new_deal, ' not in db')
         new_deal.save()
-    
     return None
 
 def convert_date_format(date):
