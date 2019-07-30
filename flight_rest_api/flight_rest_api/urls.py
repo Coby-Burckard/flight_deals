@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from skymiles_tracker.models import Airport
 from skymiles_tracker.task import check_delta
 from background_task.models import Task
 

@@ -6,6 +6,18 @@ class Airport(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=6)
 
+    def __str__(self):
+        return self.name
+    
+    def __eq__(self, other):
+        if self.name == other.name:
+            return True
+        else:
+            return False
+
+    def __hash__(self):
+        return hash(self._get_pk_val())
+
 class Deal(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     departure_airport = models.ForeignKey(Airport, on_delete=(models.CASCADE), related_name='departure_airport')
@@ -14,8 +26,9 @@ class Deal(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     is_active = models.BooleanField(default=True)
+    dollars = models.IntegerField(null=True)
 
-    def __repr__(self):
+    def __str__(self):
         return '{} -> {} for {}'.format(self.departure_airport, self.arrival_airport, self.miles)
 
     def __eq__(self, other):
@@ -24,3 +37,6 @@ class Deal(models.Model):
             return True
         else:
             return False
+
+    def __hash__(self):
+        return hash(self._get_pk_val())
