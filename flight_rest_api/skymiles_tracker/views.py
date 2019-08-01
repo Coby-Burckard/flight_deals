@@ -26,6 +26,6 @@ def get_history(request, departure_airport, arrival_airport):
     '''
 
     if request.method == 'GET':
-        deals = Deal.objects.filter(departure_airport__name=departure_airport, arrival_airport__name=arrival_airport)
+        deals = Deal.objects.filter(departure_airport__name=departure_airport, arrival_airport__name=arrival_airport).order_by('-created')
         serializer = DealSerializer(deals, many=True)
         return Response(serializer.data)
