@@ -2,36 +2,30 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from django.http import HttpResponse, JsonResponse
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
 from .serializers import DealSerializer, AirportSerializer
 from .models import Deal, Airport
 
-@csrf_exempt
+@api_view(['GET'])
 def get_deals(request):
     '''
         GET: returns a list of deals
-        POST: scrapes the delta page for deals and updates the database.
     '''
 
     if request.method == 'GET':
         deals = Deal.objects.all()
         serializer = DealSerializer(deals, many=True)
-        return JsonResponse(serializer.data, safe=False)
+        return Response(serializer.data)
 
-def verify_deal(deal):
+@api_view(['GET'])
+def get_history(request, departure_airport, arrival_airport):
     '''
-        verifies the components of the deal, and updates necessary information in the database.
+        GET: returns a history of a flight between two given airports
     '''
-    pass
 
-def verify_airport(airport):
-    '''
-        verifies that an airport exists and adds one to the database if not.
-    '''
-    pass
-
-def check_delta():
-    '''
-        calls api from delta and up
-    '''
-    pass
+    if request.method == 'GET':
+        deals = Deal.objects.filter(departure_airport__name=departure_airport, arrival_airport__name=arrival_airport)
+        serializer = DealSerializer(deals, many=True)
+        return Response(serializer.data)
