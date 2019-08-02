@@ -12,11 +12,11 @@ from .models import Deal, Airport
 @api_view(['GET'])
 def get_deals(request):
     '''
-        GET: returns a list of deals
+        GET: returns a list of active deals
     '''
 
     if request.method == 'GET':
-        deals = Deal.objects.all()
+        deals = Deal.objects.filter(is_active=True)
         serializer = DealSerializer(deals, many=True)
         return Response(serializer.data)
 
