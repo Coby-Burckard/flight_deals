@@ -4,13 +4,20 @@ from rest_framework.parsers import JSONParser
 from django.http import HttpResponse, JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.reverse import reverse
 
 from .serializers import DealSerializer, AirportSerializer
 from .models import Deal, Airport
 
-@csrf_exempt
 @api_view(['GET'])
-def get_deals(request):
+def api_root(request, format=None):
+    return Response({
+        'active deals': reverse('active_deals', request=request, format=format),
+        # 'deal history': reverse('deal_history', request=request, format=format)
+    })
+
+@api_view(['GET'])
+def get_deals(request, format=None):
     '''
         GET: returns a list of active deals
     '''
@@ -20,9 +27,8 @@ def get_deals(request):
         serializer = DealSerializer(deals, many=True)
         return Response(serializer.data)
 
-@csrf_exempt
 @api_view(['GET'])
-def get_history(request, deal_id):
+def get_history(request, deal_id, format=None):
     '''
         GET: returns a history of a flight between two given airports. Order by date created.
     '''
