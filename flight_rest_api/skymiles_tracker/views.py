@@ -28,7 +28,7 @@ def get_deals(request, format=None):
         return Response(serializer.data)
 
 @api_view(['GET'])
-def get_history(request, deal_id, format=None):
+def get_history(request, format=None):
     '''
         GET: returns a history of a flight between two given airports. Order by date created.
     '''
